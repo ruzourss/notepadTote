@@ -22,7 +22,7 @@ public class guardar extends JFileChooser{
     //constructor por defecto
     public guardar() {   
     }
-    //constructor con dos atributos uno es directorio de donde va partir el JFileChooser y el otro el texto que le vamos a pasar que queremos guardar
+    //constructor con dos atributos uno es directorio de donde va partir el JFileChooser y el otro el texto que le vamos a pasar que queremos guardar 
     public guardar(File currentDirectory,JTextArea texto) {
         super(currentDirectory);
         this.txt=texto;
@@ -114,18 +114,26 @@ public class guardar extends JFileChooser{
 private void crearFichero(File fichero){
         
         try {
-            
+            //creamos el fichero primero
             fichero.createNewFile();
-            
+            //abrimos un flujo de salida hacia el fichero que acabamos de crear
             FileOutputStream out = new FileOutputStream(fichero);
+            //creamos un buffer donde irá guardando toda la información que se escribirá en el fichero
+            //es más eficiente utilizar un buffer ya que primero lo guardamos en un buffer en una memoria
+            //intermedia y luego de ese buffer realiza un acceso al fichero que almacena la infromación y así
+            //nos ahoramos constantes conexiones de E/S
             OutputStreamWriter w = new OutputStreamWriter(out,"UTF8");
+            //creamos un buffer que es donde vamos a escribir nuestro texto
             BufferedWriter bf = new BufferedWriter(w);
-            
+            //obtenemos los datos de nuestro jtextArea
             String dato = txt.getText();
+            //remplazamos los saltos de línea para que el bloc de notas lo abra bien
             String replace = dato.replace("\n", "\r\n");
+            //escribimos los datos remplazados
             bf.write(replace);
+            //forzamos la escritura
             bf.flush();
-            
+            //cerramos los flujos
             bf.close();
             
             
